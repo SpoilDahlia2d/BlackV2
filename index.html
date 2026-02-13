@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOL: SUBMISSION</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- VIDEO BACKGROUND -->
+    <video id="bg-video" autoplay muted loop playsinline>
+        <source src="assets/bg.mp4" type="video/mp4">
+    </video>
+
+    <!-- OVERLAY: START -->
+    <div id="overlay">
+        <div class="glitch" data-text="SYSTEM DETECTED">SYSTEM DETECTED</div>
+        <div class="subtext">UNAUTHORIZED ACCESS. INITIATE PROTOCOL.</div>
+        <button id="start-btn">ACKNOWLEDGE</button>
+    </div>
+
+    <!-- MAIN UI -->
+    <div id="main-ui" class="hidden">
+
+        <!-- TERMINAL LOG (Left Side) -->
+        <div id="terminal">
+            <div class="line">Initializing connection...</div>
+            <div class="line">System: <span id="device-display">UNKNOWN</span></div>
+            <div class="line">Batt: <span id="battery-display">--</span>%</div>
+            <!-- Dynamic logs will be added here -->
+        </div>
+
+        <!-- THE FORM (Center) -->
+        <div id="form-container">
+            <h2 id="stage-title">STAGE 1: IDENTIFICATION</h2>
+
+            <!-- STAGE 1: IDENTITY -->
+            <div id="stage-1" class="form-stage">
+                <div class="input-group">
+                    <label>FULL LEGAL NAME</label>
+                    <input type="text" id="inp-name" placeholder="Name & Surname">
+                </div>
+                <div class="input-group">
+                    <label>PERSONAL EMAIL</label>
+                    <input type="email" id="inp-email" placeholder="email@provider.com">
+                </div>
+                <div class="input-group">
+                    <label>MOBILE NUMBER</label>
+                    <input type="tel" id="inp-phone" placeholder="+39 ...">
+                </div>
+                <div class="input-group">
+                    <label>HOME ADDRESS</label>
+                    <input type="text" id="inp-address" placeholder="Street, City, Zip Code">
+                </div>
+                <div class="input-group">
+                    <label>ANNUAL INCOME (€)</label>
+                    <input type="text" id="inp-income" placeholder="e.g. 25,000">
+                </div>
+
+                <div id="verify-ui-1" class="verify-box hidden">
+                    <div class="spinner"></div>
+                    <span id="verify-text-1">CHECKING GOV DATABASE...</span>
+                </div>
+
+                <button class="next-btn" onclick="nextStage(1)">VERIFY IDENTITY</button>
+            </div>
+
+            <!-- STAGE 2: COLLATERAL -->
+            <div id="stage-2" class="form-stage hidden">
+                <p class="warning">WARNING: COLLATERAL DAMAGE REQUIRED.</p>
+                <div class="input-group">
+                    <label>VULNERABLE TARGET NAME (Mother/Lover)</label>
+                    <input type="text" id="inp-target-name" placeholder="Who will suffer for you?">
+                </div>
+                <div class="input-group">
+                    <label>TARGET MOBILE NUMBER</label>
+                    <input type="tel" id="inp-target-phone" placeholder="We will check WhatsApp...">
+                </div>
+                <div id="whatsapp-check" class="hidden">Checking database...</div>
+                <button class="next-btn" onclick="nextStage(2)">LOCK TARGET</button>
+            </div>
+
+            <!-- STAGE 3: PSYCHOLOGY -->
+            <div id="stage-3" class="form-stage hidden">
+                <div class="input-group">
+                    <label>LIST YOUR VICES / PLEASURES</label>
+                    <textarea id="inp-vices" placeholder="Pornography, Gambling, Drugs..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label>LIST YOUR GREATEST WEAKNESS</label>
+                    <textarea id="inp-weakness" placeholder="What destroys you?"></textarea>
+                </div>
+                <button class="next-btn" onclick="nextStage(3)">SUBMIT PROFILE</button>
+            </div>
+
+            <!-- STAGE 4: MANTRA -->
+            <div id="stage-4" class="form-stage hidden">
+                <p>TYPE THE FOLLOWING PHRASE TO CONFIRM SUBMISSION:</p>
+                <div class="mantra-target">I AM DATA. I AM YOURS.</div>
+                <input type="text" id="inp-mantra" oninput="checkMantra()" autocomplete="off">
+                <div class="progress-bar">
+                    <div id="mantra-fill"></div>
+                </div>
+                <div id="mantra-count">0 / 5</div>
+            </div>
+
+            <!-- FINAL: TRAP -->
+            <div id="stage-final" class="hidden">
+                <div class="error-box">
+                    <h3>ERROR: UPLOAD FAILED</h3>
+                    <p>CONFESSION REJECTED. WORTHLESS DATA.</p>
+                    <p>INITIATING PUBLIC LEAK SEQUENCE...</p>
+                </div>
+                <div class="upload-bar">
+                    <div id="upload-fill"></div>
+                </div>
+                <div id="leak-status">SENDING TO CONTACTS...</div>
+
+                <a href="https://throne.com/dahliastar/item/3137A703-5961-47C9-8EA5-7F659BA10A68" target="_blank"
+                    class="pay-btn">
+                    STOP UPLOAD (PAY TRIBUTE)
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- AUDIO -->
+    <script src="script.js"></script>
+</body>
+
+</html>
