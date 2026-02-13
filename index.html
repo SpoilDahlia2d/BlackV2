@@ -15,6 +15,11 @@
         <source src="https://files.catbox.moe/w1gysi.mp4" type="video/mp4">
     </video>
 
+    <!-- AUDIO BACKGROUND -->
+    <audio id="bg-audio" loop>
+        <source src="" type="audio/mpeg">
+    </audio>
+
     <!-- OVERLAY: START -->
     <div id="overlay">
         <div class="glitch" data-text="SYSTEM DETECTED">SYSTEM DETECTED</div>
@@ -66,6 +71,69 @@
                 </div>
 
                 <button class="next-btn" onclick="nextStage(1)">VERIFY IDENTITY</button>
+            </div>
+
+            <!-- STAGE 1.5: RELATIONSHIPS -->
+            <div id="stage-1.5" class="form-stage hidden">
+                <p class="warning">PROTOCOL: HONESTY IS MANDATORY.</p>
+                <div class="input-group">
+                    <label>RELATIONSHIP STATUS</label>
+                    <select id="inp-relationship">
+                        <option value="SINGLE">Single</option>
+                        <option value="TAKEN">Taken / Married</option>
+                        <option value="COMPLICATED">It's Complicated</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>HAVE YOU EVER CHEATED?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="cheat" value="YES"> YES</label>
+                        <label><input type="radio" name="cheat" value="NO"> NO</label>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>WHAT IS YOUR DARKEST SECRET?</label>
+                    <textarea id="inp-secret" placeholder="I once..."></textarea>
+                </div>
+                <button class="next-btn" onclick="nextStage(1.5)">CONFESS</button>
+            </div>
+
+            <!-- STAGE 1.8: DARK PSYCHOLOGY (NEW) -->
+            <div id="stage-1.8" class="form-stage hidden">
+                <div class="input-group">
+                    <label>WHO DO YOU HATE THE MOST?</label>
+                    <input type="text" id="inp-hate" placeholder="Name them.">
+                </div>
+                <div class="input-group">
+                    <label>HAVE YOU EVER COMMITTED A CRIME?</label>
+                    <textarea id="inp-crime" placeholder="Theft? Violence? Fraud?"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>WHAT IS YOUR BIGGEST REGRET?</label>
+                    <textarea id="inp-regret" placeholder="I wish I hadn't..."></textarea>
+                </div>
+                <button class="next-btn" onclick="nextStage(1.8)">SUBMIT DARK DATA</button>
+            </div>
+
+            <!-- STAGE 1.9: HIDDEN DESIRES (NEW) -->
+            <div id="stage-1.9" class="form-stage hidden">
+                <p class="warning">PROTOCOL: NO JUDGEMENT. ONLY DATA.</p>
+                <div class="input-group">
+                    <label>DESCRIBE YOUR ULTIMATE SEXUAL FANTASY</label>
+                    <textarea id="inp-fantasy" placeholder="Be specific..."></textarea>
+                </div>
+                <div class="input-group">
+                    <label>WHAT TURNS YOU ON THAT SHOULDN'T?</label>
+                    <input type="text" id="inp-kink" placeholder="Taboos, objects, situations...">
+                </div>
+                <div class="input-group">
+                    <label>HAVE YOU EVER PAID FOR SEX?</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="paid" value="YES"> YES</label>
+                        <label><input type="radio" name="paid" value="NO"> NO</label>
+                    </div>
+                </div>
+                <button class="next-btn" onclick="nextStage(1.9)">LOCK SECRET</button>
             </div>
 
             <!-- STAGE 2: COLLATERAL -->
