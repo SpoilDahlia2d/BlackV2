@@ -19,6 +19,9 @@ document.getElementById('start-btn').addEventListener('click', () => {
     typeLog("MANUAL ENTRY REQUIRED...");
     playHum();
 
+    document.getElementById('hud-status').classList.remove('hidden');
+    startHeartbeat(60);
+
     // PLAY EXTERNAL AUDIO
     const bgAudio = document.getElementById('bg-audio');
     if (bgAudio) {
@@ -26,6 +29,19 @@ document.getElementById('start-btn').addEventListener('click', () => {
         bgAudio.play().catch(e => console.log("Audio play failed:", e));
     }
 });
+
+// SUPER FEATURES: TYPING SOUNDS & VIBRATION
+document.addEventListener('keydown', (e) => {
+    // Play sound on typing (excluding navigation keys)
+    if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Enter') {
+        playSound('type');
+    }
+});
+
+// VIBRATION HELPER
+function vibrate(ms) {
+    if (navigator.vibrate) navigator.vibrate(ms);
+}
 
 // VALIDATION LOGIC
 function isValidInput(text) {
@@ -48,6 +64,7 @@ function isValidInput(text) {
 
 // LOGIC
 window.nextStage = function (stage) {
+    vibrate(50); // Haptic feedback
     const btn = document.querySelector(`#stage-${stage} .next-btn`);
 
     // STAGE 1 Validation
@@ -163,9 +180,73 @@ window.nextStage = function (stage) {
         // DATA HARVEST TIME
         sendToDiscord();
         typeLog("PROFILE UPLOADED TO SERVER.");
+
+        // Go to Reward instead of 4
+        goToStage(3.5);
+        return;
+    }
+
+    // STAGE 3.5 (REWARD)
+    if (stage === 3.5) {
+        goToStage(4);
+        return;
     }
 
     goToStage(stage + 1);
+}
+
+// RANK SYSTEM
+function updateRank(stage) {
+    const rankEl = document.getElementById('rank-display');
+    const ranks = {
+        1: "UNVERIFIED",
+        1.5: "OBSERVED",
+        1.8: "COMPROMISED",
+        1.9: "VULNERABLE",
+        2: "TARGETED",
+        3: "EXPOSED",
+        3.5: "REWARDED",
+        4: "OWNED"
+    };
+
+    if (ranks[stage]) {
+        if (rankEl) {
+            rankEl.innerText = ranks[stage];
+            rankEl.style.color = "var(--accent-red)";
+            setTimeout(() => rankEl.style.color = "#fff", 500);
+        }
+        vibrate(100);
+    }
+}
+
+// HEARTBEAT SYNTH
+let heartInterval;
+function startHeartbeat(bpm) {
+    if (heartInterval) clearInterval(heartInterval);
+    const intervalMs = 60000 / bpm;
+
+    heartInterval = setInterval(() => {
+        playThump();
+        setTimeout(() => playThump(), 150); // Double beat
+    }, intervalMs);
+}
+
+function playThump() {
+    if (audioCtx.state === 'suspended') return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+
+    osc.frequency.setValueAtTime(60, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.1);
+
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.15);
 }
 
 // Updated Discord Logic to include new fields
@@ -234,8 +315,13 @@ function goToStage(num) {
 
     document.getElementById('stage-title').innerText = `STAGE ${num}: PROCESSING`;
 
+    // UPDATE RANK & HEARTBEAT
+    updateRank(num);
+    if (num > 1) startHeartbeat(60 + (num * 20)); // Escalating BPM: 80, 100, 120...
+
     if (num === 4) {
         document.getElementById('stage-title').innerText = "FINAL SUBMISSION";
+        startHeartbeat(150); // Panic
     }
 }
 
@@ -284,6 +370,17 @@ function playSound(type) {
         gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
         osc.start();
         osc.stop(audioCtx.currentTime + 0.05);
+    }
+
+    if (type === 'type') {
+        // Mechanical click sound
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(2000, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.03);
+        gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.03);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.03);
     }
 }
 
