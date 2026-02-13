@@ -274,11 +274,13 @@ window.checkMantra = function () {
 }
 
 function typeLog(msg) {
-    const div = document.createElement('div');
-    div.className = 'line';
-    div.innerText = `> ${msg}`;
-    terminal.appendChild(div);
-    playSound('click');
+    // Terminal removed by user request. Logging to console instead to prevent errors.
+    console.log(`> ${msg}`);
+    // const div = document.createElement('div');
+    // div.className = 'line';
+    // div.innerText = `> ${msg}`;
+    // if(terminal) terminal.appendChild(div);
+    // playSound('click');
 }
 
 // AUDIO SYNTH
