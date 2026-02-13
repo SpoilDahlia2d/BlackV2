@@ -11,6 +11,10 @@
     --font-main: 'Share Tech Mono', monospace;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -21,6 +25,9 @@ body {
     height: 100vh;
     user-select: none;
     letter-spacing: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* VIDEO BACKGROUND */
@@ -89,34 +96,45 @@ body {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
+/* HUD STATUS */
+#hud-status {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-family: var(--font-main);
+    color: #555;
+    font-size: 0.9rem;
+    z-index: 100;
+    letter-spacing: 2px;
+    border: 1px solid #333;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#rank-display {
+    color: #fff;
+    font-weight: bold;
+    margin-left: 10px;
+    text-shadow: 0 0 5px #fff;
+}
+
 /* MAIN UI */
 #main-ui {
-    display: grid;
-    grid-template-columns: 280px 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
     height: 100vh;
     position: relative;
     background: radial-gradient(circle at center, transparent 0%, #000 90%);
-    /* Vignette */
 }
 
 .hidden {
     display: none !important;
 }
 
-/* TERMINAL (Formerly Green) */
-#terminal {
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 30px;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.9), transparent);
-    color: var(--terminal-text);
-    /* Uses Silver now */
-    font-size: 0.75rem;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-family: 'Share Tech Mono', monospace;
-    opacity: 0.8;
-}
+/* TERMINAL REMOVED */
 
 .line {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -263,6 +281,24 @@ textarea {
     }
 }
 
+/* REWARD STAGE */
+.reward-container {
+    width: 100%;
+    margin: 20px 0;
+    border: 1px solid #333;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#reward-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border: 1px solid #555;
+    filter: sepia(50%) contrast(1.2);
+    /* Slight vintage/dark look */
+}
+
 /* FINAL STAGE */
 .error-box {
     border: 1px solid var(--accent-red);
@@ -303,7 +339,6 @@ textarea {
 /* MOBILE OPTIMIZATION */
 @media (max-width: 768px) {
     #main-ui {
-        grid-template-columns: 1fr;
         height: 100dvh;
         /* Dynamic viewport height for functional mobile browsers */
     }
