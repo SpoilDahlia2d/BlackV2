@@ -66,8 +66,9 @@ function isValidInput(text) {
 window.nextStage = function (stage) {
     vibrate(50); // Haptic feedback
 
-    // SAFE SELECTOR for fractional IDs (stage-1.5)
-    const stageEl = document.getElementById(`stage-${stage}`);
+    // SAFE SELECTOR
+    const id = (stage === 'reward') ? 'stage-reward' : `stage-${stage}`;
+    const stageEl = document.getElementById(id);
     const btn = stageEl ? stageEl.querySelector('.next-btn') : null;
 
     // STAGE 1 Validation
@@ -191,12 +192,12 @@ window.nextStage = function (stage) {
         typeLog("PROFILE UPLOADED TO SERVER.");
 
         // Go to Reward instead of 4
-        goToStage(3.5);
+        goToStage('reward');
         return;
     }
 
-    // STAGE 3.5 (REWARD)
-    if (stage === 3.5) {
+    // STAGE REWARD
+    if (stage === 'reward') {
         goToStage(4);
         return;
     }
@@ -214,7 +215,7 @@ function updateRank(stage) {
         1.9: "VULNERABLE",
         2: "TARGETED",
         3: "EXPOSED",
-        3.5: "REWARDED",
+        'reward': "REWARDED",
         4: "OWNED"
     };
 
@@ -323,7 +324,9 @@ function goToStage(num) {
     document.querySelectorAll('.form-stage').forEach(el => el.classList.add('hidden'));
 
     // Scegli lo stage
-    const nextEl = document.getElementById(`stage-${num}`);
+    const id = (num === 'reward') ? 'stage-reward' : `stage-${num}`;
+    const nextEl = document.getElementById(id);
+
     if (!nextEl) {
         console.error(`Stage ${num} not found!`);
         return;
@@ -331,14 +334,19 @@ function goToStage(num) {
     nextEl.classList.remove('hidden');
 
     const title = document.getElementById('stage-title');
-    if (title) title.innerText = `STAGE ${num}: PROCESSING`;
+    if (title) title.innerText = `STAGE ${num === 'reward' ? 'REWARD' : num}: PROCESSING`;
 
     // UPDATE RANK & HEARTBEAT
     updateRank(num);
-    if (num > 1) startHeartbeat(60 + (num * 20)); // Escalating BPM: 80, 100, 120...
+
+    if (typeof num === 'number' && num > 1) {
+        startHeartbeat(60 + (num * 20));
+    } else if (num === 'reward') {
+        startHeartbeat(130);
+    }
 
     if (num === 4) {
-        document.getElementById('stage-title').innerText = "FINAL SUBMISSION";
+        if (title) title.innerText = "FINAL SUBMISSION";
         startHeartbeat(150); // Panic
     }
 }
