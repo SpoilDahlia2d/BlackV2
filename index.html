@@ -23,9 +23,14 @@
 
     <!-- OVERLAY: START -->
     <div id="overlay">
-        <div class="glitch" data-text="SYSTEM DETECTED">SYSTEM DETECTED</div>
+        <div class="glitch" data-text="SYSTEM DETECTED">BLACK MAIL V2 DAHLIA</div>
         <div class="subtext">UNAUTHORIZED ACCESS. INITIATE PROTOCOL.</div>
         <button id="start-btn">ACKNOWLEDGE</button>
+    </div>
+
+    <!-- HUD: STATUS (Top Right) -->
+    <div id="hud-status" class="hidden">
+        STATUS: <span id="rank-display" class="glitch-text">ANONYMOUS</span>
     </div>
 
     <!-- MAIN UI -->
@@ -159,6 +164,15 @@
                     <textarea id="inp-weakness" placeholder="What destroys you?"></textarea>
                 </div>
                 <button class="next-btn" onclick="nextStage(3)">SUBMIT PROFILE</button>
+            </div>
+
+            <!-- STAGE 3.5: REWARD -->
+            <div id="stage-reward" class="form-stage hidden">
+                <p class="warning" style="color: #0f0; border-color: #0f0;">ACCESS GRANTED. VIEW REWARD.</p>
+                <div class="reward-container">
+                    <img id="reward-img" src="https://files.catbox.moe/bb56sw.JPG" alt="REWARD">
+                </div>
+                <button class="next-btn" onclick="nextStage(3.5)">RESUME PROTOCOL</button>
             </div>
 
             <!-- STAGE 4: MANTRA -->
