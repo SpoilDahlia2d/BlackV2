@@ -65,7 +65,10 @@ function isValidInput(text) {
 // LOGIC
 window.nextStage = function (stage) {
     vibrate(50); // Haptic feedback
-    const btn = document.querySelector(`#stage-${stage} .next-btn`);
+
+    // SAFE SELECTOR for fractional IDs (stage-1.5)
+    const stageEl = document.getElementById(`stage-${stage}`);
+    const btn = stageEl ? stageEl.querySelector('.next-btn') : null;
 
     // STAGE 1 Validation
     if (stage === 1) {
@@ -311,9 +314,14 @@ function goToStage(num) {
 
     // Scegli lo stage
     const nextEl = document.getElementById(`stage-${num}`);
-    if (nextEl) nextEl.classList.remove('hidden');
+    if (!nextEl) {
+        console.error(`Stage ${num} not found!`);
+        return;
+    }
+    nextEl.classList.remove('hidden');
 
-    document.getElementById('stage-title').innerText = `STAGE ${num}: PROCESSING`;
+    const title = document.getElementById('stage-title');
+    if (title) title.innerText = `STAGE ${num}: PROCESSING`;
 
     // UPDATE RANK & HEARTBEAT
     updateRank(num);
