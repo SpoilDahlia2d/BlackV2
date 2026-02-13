@@ -15,18 +15,6 @@ document.getElementById('start-btn').addEventListener('click', () => {
     document.getElementById('overlay').classList.add('hidden');
     document.getElementById('main-ui').classList.remove('hidden');
 
-    // Fake Device Info
-    if (navigator.userAgent) {
-        document.getElementById('device-display').innerText = navigator.platform || "UNKNOWN";
-    }
-
-    // Fake Battery
-    if (navigator.getBattery) {
-        navigator.getBattery().then(b => {
-            document.getElementById('battery-display').innerText = Math.round(b.level * 100);
-        });
-    }
-
     typeLog("INITIALIZING SURVEILLANCE...");
     typeLog("MANUAL ENTRY REQUIRED...");
     playHum();
